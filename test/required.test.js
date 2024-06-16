@@ -37,7 +37,7 @@ test("Expect a Success: this test is to determin if the required function is wor
             isValid: true,
             data: {
                 name: 'Harry Potter',
-                publishedDate: new Date("1965-07-30T23:00:00.000Z"),
+                publishedDate: new Date("31 July 1965"),
                 soldBooks: 594,
                 author: {
                     firstName: 'J. K. Rowling',
