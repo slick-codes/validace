@@ -12,15 +12,18 @@ class Schema extends Types {
         super()
         this.schema = schema ?? {}
         // The following allows processes the configuration parsed in the constructor function
+        this.configuration = {
+            allowUnregisteredKeys: false,
+            allowEmptyString: true
+        }
+
         if (config) this.config(config)
 
     }
 
     config(config) {
         this.configuration = {
-            allowUnregisteredKeys: false,
-            allowEmptyString: true,
-            hooks: { onError: null, onSuccess: null },
+            ...this.configuration,
             ...config
         }
     }
@@ -209,10 +212,10 @@ class Schema extends Types {
 
             if (
                 schemaValue &&
-                ["string"].includes(schemaValue.type.toLowerCase()) &&
+                ["string"].includes(schemaValue?.type?.toLowerCase()) &&
                 (
-                    (schemaValue.allowEmptyString === undefined && !this.configuration.allowEmptyString) ||
-                    (schemaValue.allowEmptyString === false || !this.configuration.allowEmptyString)
+                    (schemaValue.allowEmptyString === false) ||
+                    (schemaValue.allowEmptyString === undefined && !this.configuration.allowEmptyString)
                 )
             ) {
                 if (keyValue[1] === "")
