@@ -67,7 +67,7 @@ test("Failed: i'm expecting an error, as this code would detect the empty fields
         .toEqual({
             error: {
                 hobbies: { unRegisteredKey: '"hobbies" is not registered on the schema!' },
-                firstName: { emptyString: '"firstName" field cannot be empty!' }
+                firstName: { allowEmptyString: '"firstName" field cannot be empty!' }
             },
             isValid: false,
             data: null

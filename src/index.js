@@ -208,19 +208,24 @@ class Schema extends Types {
     #allowEmptyString(error, data, schema) {
         for (let keyValue of Object.entries(data)) {
 
-            let schemaValue = schema[keyValue[0]]
+            let sValue = schema[keyValue[0]]
+            let allowEmpty = sValue?.allowEmptyString
+            let configAllowEmpty = this.configuration.allowEmptyString
 
             if (
-                schemaValue &&
-                ["string"].includes(schemaValue?.type?.toLowerCase()) &&
+                sValue &&
+                ["string"].includes(sValue?.type?.toLowerCase()) &&
                 (
-                    (schemaValue.allowEmptyString === false) ||
-                    (schemaValue.allowEmptyString === undefined && !this.configuration.allowEmptyString)
+                    (allowEmpty === false || Array.isArray(allowEmpty) && allowEmpty[0] === false) ||
+                    (allowEmpty === undefined && !configAllowEmpty)
                 )
             ) {
+                let message = Array.isArray(allowEmpty) ? allowEmpty[1] : undefined
+                const errorKeyRequirements = { value: keyValue[1], property: "allowEmptyString", key: keyValue[0] }
+
                 if (keyValue[1] === "")
                     error = this.#setError(keyValue[0], error, {
-                        emptyString: `"${keyValue[0]}" field cannot be empty!`
+                        allowEmptyString: message ? this.#setPlaceholder(message, errorKeyRequirements) : `"${keyValue[0]}" field cannot be empty!`
                     })
             }
         }
