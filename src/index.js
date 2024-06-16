@@ -1,8 +1,6 @@
 const Types = require("./types")
 
 
-
-
 class Schema extends Types {
 
     #nestedScheme = undefined
@@ -46,12 +44,6 @@ class Schema extends Types {
 
         const schemaKeys = Object.keys(schema)
 
-        // Configuration --------------------------------------------------
-        // Prevent users from using more keys than the Schema allows (preventUnregisteredKeys)
-        error = this.#allowUnregisteredKeys(error, data, schema)
-
-        // validate configuration.allowEmptyString 
-        error = this.#allowEmptyString(error, data, schema)
 
         for (let sKey of schemaKeys) {
             // this checks if {type: string} or it's just key: type 
@@ -67,9 +59,9 @@ class Schema extends Types {
             })
 
             /* 
-                MODIFIERS 
-                modifiers are set at the top to ensure that values get's modified before it get's checked
-            */
+        MODIFIERS 
+        modifiers are set at the top to ensure that values get's modified before it get's checked
+    */
             // TRIM: handle text triming 
             if (typeof data[sKey] === 'string' && sData.trim) data[sKey] = data[sKey].trim()
             else if (typeof data[sKey] === 'string' && sData.trimEnd) data[sKey] = data[sKey].trimEnd()
@@ -85,6 +77,13 @@ class Schema extends Types {
             if (typeof sData.modifier === 'function') data[sKey] = sData.modifier(data[sKey])
 
             /* END OF MODIFIERS */
+
+            // Configuration --------------------------------------------------
+            // Prevent users from using more keys than the Schema allows (preventUnregisteredKeys)
+            error = this.#allowUnregisteredKeys(error, data, schema)
+            // validate configuration.allowEmptyString 
+            error = this.#allowEmptyString(error, data, schema)
+
 
             // this handles the type check
             const isTypeSupported = this.types.includes(sData.type?.toLowerCase())
