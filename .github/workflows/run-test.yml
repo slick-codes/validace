@@ -1,0 +1,22 @@
+
+
+name: jest
+
+on: 
+  push: 
+    branches: [master, main]
+  pull_request:
+    branches: [master, main]
+    path-ignore:
+    
+
+    job:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+         node-version: 16
+        - run: npm ci
+        - run: npm run test
