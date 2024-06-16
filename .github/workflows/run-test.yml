@@ -8,15 +8,20 @@ on:
   pull_request:
     branches: [master, main]
     path-ignore:
+      - "test/testing.js"
+      - "npmignore"
+      - ".gitignore"
     
 
-    job:
+jobs:
+  build:
     runs-on: ubuntu-latest
 
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
-        with:
-         node-version: 16
-        - run: npm ci
-        - run: npm run test
+  steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+      with:
+        node-version: 16
+      - run: npm ci
+      - run: npm run test
+
