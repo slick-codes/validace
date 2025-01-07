@@ -1,17 +1,15 @@
-
-
 class Types {
     constructor() {
-        this.types = ["string", "number", "float", "boolean", "array", "object", "date", "email", "jwt"]
+        this.types = ['string', 'number', 'float', 'boolean', 'array', 'object', 'date', 'email', 'jwt']
     }
 
     isEmail(email) {
-        // check if email is a string 
-        if (typeof email !== "string") return false
+        // check if email is a string
+        if (typeof email !== 'string') return false
         // Define the regular expression pattern for a valid email address
-        const pattern = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
+        const pattern = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/
         // Use the test() method to check if the email matches the pattern
-        return pattern.test(email);
+        return pattern.test(email)
     }
 
     isString(string) {
@@ -34,8 +32,8 @@ class Types {
     }
 
     isFloat(number) {
-        if (typeof number !== 'number') return false;
-        // check if the vale is a floating point number 
+        if (typeof number !== 'number') return false
+        // check if the vale is a floating point number
         return Number.isFinite(number) && !Number.isInteger(number)
     }
 
@@ -46,28 +44,29 @@ class Types {
 
     isJWT(token) {
         if (typeof token !== 'string') {
-            return false;
+            return false
         }
 
-        const parts = token.split('.');
+        const parts = token.split('.')
 
         // Check if the token has three parts
         if (parts.length !== 3) {
-            return false;
+            return false
         }
 
         // Check if each part is a valid Base64Url encoding
         const isBase64Url = (str) => {
             try {
-                atob(str.replace(/-/g, '+').replace(/_/g, '/'));
-                return true;
+                atob(str.replace(/-/g, '+').replace(/_/g, '/'))
+                return true
             } catch (e) {
-                return false;
+                return false
             }
-        };
+        }
 
-        return parts.every(isBase64Url);
+        return parts.every(isBase64Url)
     }
 }
 
 module.exports = Types
+
